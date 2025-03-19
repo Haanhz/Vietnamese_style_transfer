@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Demo ViT5 AI</title>
-    <link rel="stylesheet" href="NLP.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='NLP.css') }}">
+    <!-- <link rel="stylesheet" href="/static/NLP.css"> -->
+
+
 </head>
 <body>
     <div id="header">
@@ -39,7 +42,7 @@
                 if (timeLeft <= 0) clearInterval(countdown);
             }, 1000);
     
-            fetch("http://localhost:5000/predict", {
+            fetch("http://127.0.0.1:10000/predict", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ text: text })
