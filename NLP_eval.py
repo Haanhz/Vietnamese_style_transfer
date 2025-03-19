@@ -5,7 +5,7 @@ import re
 import torch
 import os
 
-model_dir = r".\model"
+model_dir = r"./model"
 model = AutoModelForSeq2SeqLM.from_pretrained(model_dir)
 tokenizer = AutoTokenizer.from_pretrained("VietAI/vit5-base")
 
