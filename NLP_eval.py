@@ -3,8 +3,9 @@ from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 import re
 import torch
+import os
 
-model_dir = r"D:\Ha Anh\Group16\Sourcecode\model"
+model_dir = r".\model"
 model = AutoModelForSeq2SeqLM.from_pretrained(model_dir)
 tokenizer = AutoTokenizer.from_pretrained("VietAI/vit5-base")
 
@@ -71,4 +72,6 @@ def home():
     return render_template("index.html")
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    port = int(os.environ.get("PORT", 5000))  # Lấy PORT từ env, mặc định 5000
+    app.run(host="0.0.0.0", port=port)
+
