@@ -2,6 +2,7 @@ from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 import re
+import torch
 
 model_dir = r"D:\Ha Anh\Group16\Sourcecode\model"
 model = AutoModelForSeq2SeqLM.from_pretrained(model_dir)
