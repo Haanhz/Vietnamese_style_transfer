@@ -1,5 +1,5 @@
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
-from flask import Flask, request, jsonify
+from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 import torch
 import re
@@ -65,6 +65,10 @@ def predict_api():
     text = data["text"]
     output_text = predict(text)
     return jsonify({"output": output_text})
+
+@app.route("/")
+def home():
+    return render_template("index.html")
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
