@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo ViT5 AI</title>
+    <link rel="stylesheet" href="NLP.css">
+</head>
+<body>
+    <div id="header">
+        <p>WELCOME </p>
+    </div>
+    <p id="intro">🥰Giúp những câu từ kém sang trở nên trang trọng và quý phái💖</p>
+    <br>
+    <br>
+    <h2>Từ thế này🤬:</h2>
+    <textarea id="inputText" rows="3" cols="100"></textarea>
+    <br>
+    <button onclick="sendText()">Help</button>
+    <br>
+
+    <p id="countdown"></p>  
+    <h2>Thành thế này (tất nhiên là hay hơn)😇:</h2>
+    <p id="outputText"></p>
+
+    <script>
+        function sendText() {
+            let text = document.getElementById("inputText").value;
+            let countdownElem = document.getElementById("countdown");
+            let outputElem = document.getElementById("outputText");
+
+            let timeLeft = 10;
+            countdownElem.innerText = `Sắp ra rồi ${timeLeft}s...`;
+    
+            // Tạo countdown
+            let countdown = setInterval(() => {
+                timeLeft--;
+                countdownElem.innerText = `Sắp ra rồi ${timeLeft}s...`;
+                if (timeLeft <= 0) clearInterval(countdown);
+            }, 1000);
+    
+            fetch("http://localhost:5000/predict", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ text: text })
+            })
+            .then(response => response.json())
+            .then(data => {
+                clearInterval(countdown);  // Dừng countdown khi có kết quả
+                countdownElem.innerText = "Hoàn thành!";
+                outputElem.innerText = data.output;
+            })
+            .catch(error => {
+                clearInterval(countdown);
+                countdownElem.innerText = "Lỗi!";
+                console.error("Error:", error);
+            });
+        }
+    </script>
+</body>
+</html>
